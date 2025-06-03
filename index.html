@@ -2,415 +2,323 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Professional Coin Wallet</title>
+  <title>Coinbase Wallet Preview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Fonts & Icons -->
+  <!-- Professional Coinbase Style -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --wallet-green: #00d54b;
-      --wallet-black: #101820;
-      --wallet-gray: #f4f6fa;
-      --wallet-border: #e7e8ea;
+      --cb-blue: #1652f0;
+      --cb-light: #f5f8fa;
+      --cb-dark: #0a2540;
+      --cb-border: #e0e4eb;
+      --cb-gray: #a0aec0;
+      --cb-card: #fff;
     }
     body {
-      background: var(--wallet-gray);
+      background: var(--cb-light);
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      color: var(--wallet-black);
+      color: var(--cb-dark);
       min-height: 100vh;
     }
-    #preloader {
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: var(--wallet-green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      transition: opacity 0.5s;
-    }
-    #preloader .preloader-text {
-      color: #fff;
-      font-size: 2.8rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-shadow: 0 4px 24px #009d3360;
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      user-select: none;
-      animation: popin 1.2s cubic-bezier(.18,.89,.32,1.28) forwards;
-    }
-    @keyframes popin {
-      0% { opacity: 0; transform: scale(0.8);}
-      50% { opacity: 1; transform: scale(1.07);}
-      100% { opacity: 1; transform: scale(1);}
-    }
-    .wallet-container {
-      display: none;
+    .cb-container {
       max-width: 420px;
-      background: #fff;
-      margin: 32px auto 0;
-      border-radius: 18px;
-      box-shadow: 0 8px 36px #0001, 0 1.5px 0 var(--wallet-gray);
-      padding: 0 0 28px;
+      margin: 40px auto;
+      background: var(--cb-card);
+      border-radius: 20px;
+      box-shadow: 0 6px 32px #0a25401a;
+      padding: 0 0 32px 0;
       overflow: hidden;
     }
-    .wallet-header {
+    .cb-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 22px 28px 12px;
-      background: #fff;
-      border-bottom: 1px solid var(--wallet-border);
+      padding: 24px 28px 12px 28px;
+      background: var(--cb-blue);
+      color: #fff;
+      border-bottom-left-radius: 32px 16px;
+      border-bottom-right-radius: 32px 16px;
+      box-shadow: 0 4px 16px #1652f01c;
       position: relative;
     }
-    .user-photo {
-      width: 42px; height: 42px;
+    .cb-profile-pic {
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      background: #e3e5e8;
-      object-fit: cover;
+      background: #e4e9f0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.7rem;
-      color: #bbb;
-      border: 2px solid var(--wallet-green);
+      font-size: 1.5rem;
+      color: var(--cb-gray);
+      margin-right: 16px;
+      box-shadow: 0 2px 8px #0a25401a;
+      border: 2px solid #fff2;
+      overflow: hidden;
     }
-    .user-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .user-name {
-      font-size: 1.2rem;
+    .cb-user-name {
       font-weight: 700;
-      color: var(--wallet-black);
-      letter-spacing: 0.02em;
-    }
-    .user-id {
-      font-size: 0.95rem;
-      color: #6d7a8d;
-      font-weight: 400;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
       margin-top: 2px;
     }
-    .wallet-title {
-      margin-left: auto;
-      font-size: 1.1rem;
-      color: #6d7a8d;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-    .portfolio-section {
-      padding: 30px 28px 18px;
-      text-align: center;
-      background: linear-gradient(95deg, #e5fcee 60%, #fff 100%);
-      border-bottom: 1px solid var(--wallet-border);
-      margin-bottom: 12px;
-    }
-    .portfolio-label {
-      font-size: 1.05rem;
-      letter-spacing: 0.03em;
-      color: #6d7a8d;
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    .portfolio-amount {
-      font-size: 2.4rem;
-      font-weight: 800;
-      color: var(--wallet-green);
-      margin-bottom: 11px;
-      letter-spacing: 0.01em;
-    }
-    .portfolio-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
+    .cb-label {
+      font-size: 0.98rem;
+      font-weight: 400;
+      color: #d1ddfa;
       margin-top: 4px;
     }
-    .wallet-btn {
+    .cb-balance-card {
+      margin: 28px 28px 12px 28px;
+      background: #f7fbff;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #1652f008;
+      padding: 20px 22px 16px 22px;
+      text-align: left;
+    }
+    .cb-balance-title {
+      font-size: 1.04rem;
+      font-weight: 500;
+      color: var(--cb-blue);
+      margin-bottom: 7px;
+      letter-spacing: 0.01em;
+    }
+    .cb-balance-amount {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--cb-dark);
+      margin-bottom: 12px;
+    }
+    .cb-balance-euro {
+      font-size: 1.22rem;
+      color: #4d7ff6;
+      margin-left: 4px;
+      font-weight: 600;
+      vertical-align: 1px;
+    }
+    .cb-btn-row {
+      display: flex;
+      gap: 20px;
+    }
+    .cb-btn {
+      flex: 1;
+      background: var(--cb-blue);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 11px 0;
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: background 0.17s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px #1652f012;
+    }
+    .cb-btn.withdraw {
+      background: #fff;
+      color: var(--cb-blue);
+      border: 2px solid var(--cb-blue);
+    }
+    .cb-btn:active {
+      filter: brightness(0.95);
+    }
+    .cb-portfolio-section {
+      margin: 28px 28px 0 28px;
+      background: #f8fafd;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px #0a25400c;
+      padding: 18px 20px 14px 20px;
+    }
+    .cb-portfolio-title {
       font-size: 1.06rem;
       font-weight: 600;
-      padding: 10px 28px;
-      border-radius: 28px;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      background: var(--wallet-green);
-      color: #fff;
-      transition: background .15s;
-      box-shadow: 0 2px 14px #00d54b22;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .wallet-btn.withdraw {
-      background: #101820;
-      color: #fff;
-      border: 1.5px solid #111;
-      box-shadow: 0 2px 14px #10182011;
-    }
-    .wallet-btn:active { filter: brightness(0.98);}
-    .recent-activity-wrap {
-      padding: 18px 28px 5px;
-    }
-    .recent-activity-title {
-      font-size: 1.12rem;
-      font-weight: 600;
-      color: #101820;
-      margin-bottom: 10px;
-    }
-    .activity-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .activity-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--wallet-border);
-      font-size: 1.04rem;
-      color: #232f3e;
-    }
-    .activity-type {
-      font-weight: 600;
-      color: #101820;
-    }
-    .activity-date {
-      font-size: 0.98rem;
-      color: #a2b0c5;
-      margin-left: 8px;
-    }
-    .activity-amount {
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      font-size: 1.08rem;
-    }
-    .positive { color: #00ad4b;}
-    .negative { color: #e03232;}
-    .security-tip {
-      background: #fffbea;
-      color: #ad7900;
-      border-radius: 10px;
-      padding: 13px 18px;
-      margin: 28px 28px 0;
-      font-size: 0.96rem;
-      border: 1.5px solid #ffe68a;
-    }
-    .footer-img-wrap {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-      padding-bottom: 4px;
-    }
-    .footer-img {
-      height: 32px;
-      opacity: 0.7;
-    }
-    /* Modal Styles */
-    .modal-bg {
-      display: none;
-      position: fixed;
-      z-index: 10001;
-      left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      background: #10182066;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.2s;
-    }
-    .modal-card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 32px 28px 18px;
-      box-shadow: 0 8px 44px #0003;
-      min-width: 330px;
-      max-width: 90vw;
-      text-align: center;
-      position: relative;
-    }
-    .modal-card img {
-      width: 56px;
-      margin-bottom: 10px;
-    }
-    .modal-title {
-      font-size: 1.3rem;
-      font-weight: 700;
       margin-bottom: 8px;
-      color: #101820;
+      color: var(--cb-blue);
     }
-    .modal-desc {
-      font-size: 1.01rem;
+    .cb-portfolio-holdings {
+      font-size: 1.17rem;
+      color: var(--cb-dark);
+      font-weight: 500;
+      margin-bottom: 7px;
+    }
+    .cb-recent-section {
+      margin: 26px 28px 0 28px;
+    }
+    .cb-recent-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--cb-blue);
       margin-bottom: 10px;
     }
-    .modal-small {
-      color: #6d7a8d;
-      font-size: 0.96rem;
-      margin-bottom: 18px;
+    .cb-activity-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
-    .modal-btns {
+    .cb-activity-item {
       display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 6px;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f4f8;
+      font-size: 1.02rem;
+      align-items: center;
     }
-    .modal-btn {
-      font-size: 1rem;
-      border: none;
-      border-radius: 22px;
-      padding: 7px 28px;
+    .cb-activity-type {
+      font-weight: 500;
+      color: #1556b3;
+    }
+    .cb-activity-date {
+      font-size: 0.95rem;
+      color: #b3b8c9;
+      margin-left: 12px;
+    }
+    .cb-activity-amount.positive {
+      color: #16c784;
       font-weight: 600;
-      cursor: pointer;
-      background: var(--wallet-green);
-      color: #fff;
-      transition: background .15s;
     }
-    .modal-btn.secondary {
-      background: #e3eaf3;
-      color: #222;
-      border: 1.5px solid #d2dbec;
+    .cb-activity-amount.negative {
+      color: #ea3943;
+      font-weight: 600;
     }
-    @media (max-width: 520px) {
-      .wallet-container { margin: 0; border-radius: 0; }
-      .wallet-header, .portfolio-section, .recent-activity-wrap, .security-tip { padding-left: 10vw; padding-right: 10vw;}
-      .footer-img-wrap { margin-top: 22px; }
+    .cb-footer {
+      margin: 22px 0 0 0;
+      text-align: center;
+      color: #7a8ca7;
+      font-size: 0.97rem;
+      padding-bottom: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .cb-container {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .cb-header, .cb-balance-card, .cb-portfolio-section, .cb-recent-section {
+        margin-left: 6px;
+        margin-right: 6px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Preloader -->
-  <div id="preloader">
-    <span class="preloader-text">COIN WALLET</span>
-  </div>
+  <div class="cb-container">
 
-  <!-- Main Wallet Container -->
-  <div class="wallet-container">
-
-    <!-- Header: User profile and app title -->
-    <div class="wallet-header">
-      <div class="user-photo">
-        <!-- If you have a user photo, replace the src with your image -->
-        <img src="https://ui-avatars.com/api/?name=Admin554cb.id&background=00d54b&color=fff&rounded=true&size=42" alt="User Photo" style="width:100%;height:100%;border-radius:50%;">
+    <!-- Header: User info and profile picture -->
+    <div class="cb-header">
+      <div class="cb-profile-pic" title="Profile photo">
+        <i class="fa-regular fa-user"></i>
+        <!-- Replace above with <img src="..." alt="Profile" /> for real photo -->
       </div>
-      <div class="user-info">
-        <span class="user-name">Admin554cb.id</span>
-        <span class="user-id">Wallet User</span>
-      </div>
-      <span class="wallet-title">Portfolio</span>
-    </div>
-
-    <!-- Portfolio Holdings -->
-    <div class="portfolio-section">
-      <div class="portfolio-label">Portfolio Holdings</div>
-      <div class="portfolio-amount" id="portfolio-amount">€ 55,000</div>
-      <div class="portfolio-buttons">
-        <button class="wallet-btn" id="deposit-btn"><i class="fa-solid fa-plus"></i> Deposit</button>
-        <button class="wallet-btn withdraw" id="withdraw-btn"><i class="fa-solid fa-arrow-up-from-bracket"></i> Withdraw</button>
+      <div>
+        <div class="cb-user-name">Admin554cb.id</div>
+        <div class="cb-label">Wallet Preview</div>
       </div>
     </div>
 
-    <!-- Recent Activity Table -->
-    <div class="recent-activity-wrap">
-      <div class="recent-activity-title">Recent Activity</div>
-      <ul class="activity-list">
-        <li class="activity-item">
+    <!-- Portfolio / Balance Card -->
+    <div class="cb-balance-card">
+      <div class="cb-balance-title">Portfolio value</div>
+      <div class="cb-balance-amount">
+        € 55,000
+      </div>
+      <div class="cb-btn-row">
+        <button class="cb-btn" id="deposit-btn">
+          <i class="fa-solid fa-arrow-down"></i> Deposit
+        </button>
+        <button class="cb-btn withdraw" id="withdraw-btn">
+          <i class="fa-solid fa-arrow-up"></i> Withdraw
+        </button>
+      </div>
+    </div>
+
+    <!-- Holdings breakdown (optional, can be extended for more coins/assets) -->
+    <div class="cb-portfolio-section">
+      <div class="cb-portfolio-title">Your Holdings</div>
+      <div class="cb-portfolio-holdings">Portfolio: <strong>€ 55,000</strong></div>
+      <!-- Add asset breakdown here if needed -->
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="cb-recent-section">
+      <div class="cb-recent-title">Recent Activity</div>
+      <ul class="cb-activity-list">
+        <li class="cb-activity-item">
           <span>
-            <span class="activity-type">Deposit</span>
-            <span class="activity-date">May 30</span>
+            <span class="cb-activity-type">Deposit</span>
+            <span class="cb-activity-date">May 30</span>
           </span>
-          <span class="activity-amount positive">+€3,000</span>
+          <span class="cb-activity-amount positive">+€ 10,000</span>
         </li>
-        <li class="activity-item">
+        <li class="cb-activity-item">
           <span>
-            <span class="activity-type">Withdraw</span>
-            <span class="activity-date">May 28</span>
+            <span class="cb-activity-type">Withdraw</span>
+            <span class="cb-activity-date">May 28</span>
           </span>
-          <span class="activity-amount negative">-€500</span>
+          <span class="cb-activity-amount negative">-€ 2,000</span>
         </li>
-        <li class="activity-item">
+        <li class="cb-activity-item">
           <span>
-            <span class="activity-type">Deposit</span>
-            <span class="activity-date">May 26</span>
+            <span class="cb-activity-type">Deposit</span>
+            <span class="cb-activity-date">May 26</span>
           </span>
-          <span class="activity-amount positive">+€1,200</span>
+          <span class="cb-activity-amount positive">+€ 5,000</span>
         </li>
-        <li class="activity-item">
+        <li class="cb-activity-item">
           <span>
-            <span class="activity-type">Withdraw</span>
-            <span class="activity-date">May 23</span>
+            <span class="cb-activity-type">Withdraw</span>
+            <span class="cb-activity-date">May 23</span>
           </span>
-          <span class="activity-amount negative">-€250</span>
+          <span class="cb-activity-amount negative">-€ 1,000</span>
         </li>
       </ul>
     </div>
 
-    <!-- Security Tip -->
-    <div class="security-tip">
-      <strong>Security Tip:</strong> Never share your wallet password, PIN, or sensitive info with anyone.
-    </div>
-
-    <!-- Footer image (optional, can be replaced with branding or QR code for wallet app) -->
-    <div class="footer-img-wrap">
-      <img src="cash-app-footer.png" alt="Wallet Footer" class="footer-img" />
+    <div class="cb-footer">
+      <strong>Security Tip:</strong> Never share your recovery phrase or private keys with anyone. Coinbase will never ask for your password or sensitive information.
     </div>
   </div>
 
   <!-- Deposit Modal -->
-  <div class="modal-bg" id="deposit-modal">
-    <div class="modal-card">
-      <img src="cash-add-cash.png" alt="Deposit">
-      <div class="modal-title">Deposit</div>
-      <div class="modal-desc">Securely add funds to your wallet portfolio.</div>
-      <div class="modal-small">Available methods: Bank, Card, Crypto.<br>Min €1.00 per deposit.</div>
-      <div class="modal-btns">
-        <button class="modal-btn secondary" id="deposit-close">Close</button>
+  <div class="modal-bg" id="deposit-modal" style="display:none;
+    position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(22,82,240,0.07);align-items:center;justify-content:center;">
+    <div class="modal-card" style="background:#fff;border-radius:18px;max-width:340px;width:90%;padding:32px 22px;box-shadow:0 4px 24px #0a25401c;text-align:center;">
+      <div style="font-size:1.8rem;color:#1652f0;margin-bottom:10px;">
+        <i class="fa-solid fa-arrow-down"></i>
       </div>
+      <div style="font-weight:700;font-size:1.16rem;">Deposit Funds</div>
+      <div style="margin:13px 0 18px 0;color:#4d7ff6;">Deposit EUR/crypto to your wallet.</div>
+      <button class="cb-btn withdraw" id="deposit-close" style="width:100%;margin-top:12px;">Close</button>
     </div>
   </div>
 
   <!-- Withdraw Modal -->
-  <div class="modal-bg" id="withdraw-modal">
-    <div class="modal-card">
-      <img src="cash-cashout.png" alt="Withdraw">
-      <div class="modal-title">Withdraw</div>
-      <div class="modal-desc">Withdraw funds to your linked bank or crypto wallet.</div>
-      <div class="modal-small">Standard (1-3 days) or Instant (fees may apply).</div>
-      <div class="modal-btns">
-        <button class="modal-btn" id="withdraw-now-btn">Withdraw</button>
-        <button class="modal-btn secondary" id="withdraw-close">Close</button>
+  <div class="modal-bg" id="withdraw-modal" style="display:none;
+    position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(22,82,240,0.07);align-items:center;justify-content:center;">
+    <div class="modal-card" style="background:#fff;border-radius:18px;max-width:340px;width:90%;padding:32px 22px;box-shadow:0 4px 24px #0a25401c;text-align:center;">
+      <div style="font-size:1.8rem;color:#1652f0;margin-bottom:10px;">
+        <i class="fa-solid fa-arrow-up"></i>
       </div>
+      <div style="font-weight:700;font-size:1.16rem;">Withdraw Funds</div>
+      <div style="margin:13px 0 18px 0;color:#4d7ff6;">Withdraw to your linked bank or crypto address.</div>
+      <button class="cb-btn withdraw" id="withdraw-close" style="width:100%;margin-top:12px;">Close</button>
     </div>
   </div>
 
   <script>
-    // PRELOADER LOGIC
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        // Fade out preloader then show app
-        const preloader = document.getElementById('preloader');
-        preloader.style.opacity = '0';
-        setTimeout(function() {
-          preloader.style.display = 'none';
-          // Show main app
-          document.querySelector('.wallet-container').style.display = '';
-        }, 500); // match transition time
-      }, 1200); // 1.2 seconds
-    });
-
-    // Modal logic for Deposit and Withdraw
+    // Modal logic
     const depositBtn = document.getElementById('deposit-btn');
     const withdrawBtn = document.getElementById('withdraw-btn');
     const depositModal = document.getElementById('deposit-modal');
     const withdrawModal = document.getElementById('withdraw-modal');
     const depositClose = document.getElementById('deposit-close');
     const withdrawClose = document.getElementById('withdraw-close');
-    const withdrawNowBtn = document.getElementById('withdraw-now-btn');
 
     depositBtn.onclick = function() {
       depositModal.style.display = 'flex';
@@ -424,12 +332,7 @@
     withdrawClose.onclick = function() {
       withdrawModal.style.display = 'none';
     };
-    withdrawNowBtn.onclick = function() {
-      alert('For demo: Withdraw initiated!');
-      withdrawModal.style.display = 'none';
-    };
 
-    // Allow clicking outside modal to close
     window.onclick = function(e) {
       if (e.target === depositModal) {
         depositModal.style.display = 'none';
