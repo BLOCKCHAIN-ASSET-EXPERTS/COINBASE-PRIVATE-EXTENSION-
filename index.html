@@ -240,9 +240,9 @@
         <div class="modal">
             <div class="modal-title">Receive ETH</div>
             <div class="modal-desc">Scan QR code or copy your address</div>
-            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x1234abcd5678ef9012345678abcdef9012345678" alt="QR Code">
+            <img id="qrImg" src="IMG_1665.jpeg" alt="QR Code">
             <div class="address-holder" id="receiveAddressHolder">
-                <span id="ethAddress">0x1234abcd5678ef9012345678abcdef9012345678</span>
+                <span id="ethAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
                 <button class="copy-btn" id="copyReceiveBtn">Copy</button>
             </div>
             <button class="action-btn" onclick="closeModal('qrModalBg')">Close</button>
@@ -284,19 +284,19 @@
                 <span style="color:#b0a0ef;">Deposit Address:</span>
             </div>
             <div class="address-holder" id="depositAddressHolder">
-                <span id="depositAddress">0x1234abcd5678ef9012345678abcdef9012345678</span>
+                <span id="depositAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
                 <button class="copy-btn" id="copyDepositBtn">Copy</button>
             </div>
-            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x1234abcd5678ef9012345678abcdef9012345678" alt="Deposit QR Code">
+            <img id="depositQrImg" src="IMG_1665.jpeg" alt="Deposit QR Code">
             <button class="action-btn" onclick="closeModal('depositModalBg')" style="margin-top:15px;">Close</button>
         </div>
     </div>
 
     <script>
         // Sample ETH address for demo
-        const ethAddress = '0x1234abcd5678ef9012345678abcdef9012345678';
+        const ethAddress = '0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9';
         // QR code API URL
-        const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=' + ethAddress;
+        const qrApiUrl = 'IMG_1665.jpeg=' + ethAddress;
 
         // Set ETH address and QR for receive and deposit
         document.getElementById('ethAddress').textContent = ethAddress;
