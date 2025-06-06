@@ -221,7 +221,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://seeklogo.com/images/P/phantom-wallet-logo-35401BEA14-seeklogo.com.png" alt="Phantom Logo">
+            <img src="IMG_0355.jpeg" alt="Phantom Logo">
         </div>
         <div class="title">Portfolio</div>
         <div class="balance-section">
@@ -240,11 +240,12 @@
         <div class="modal">
             <div class="modal-title">Receive ETH</div>
             <div class="modal-desc">Scan QR code or copy your address</div>
-            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x1234abcd5678ef9012345678abcdef9012345678" alt="QR Code">
+            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="QR Code">
             <div class="address-holder" id="receiveAddressHolder">
-                <span id="ethAddress">0x1234abcd5678ef9012345678abcdef9012345678</span>
+                <span id="ethAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
                 <button class="copy-btn" id="copyReceiveBtn">Copy</button>
             </div>
+            <a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" target="_blank" style="display:block;margin-bottom:10px;color:#9e6fff;text-decoration:underline;font-size:0.96rem;">View QR Code URL</a>
             <button class="action-btn" onclick="closeModal('qrModalBg')">Close</button>
         </div>
     </div>
@@ -284,17 +285,18 @@
                 <span style="color:#b0a0ef;">Deposit Address:</span>
             </div>
             <div class="address-holder" id="depositAddressHolder">
-                <span id="depositAddress">0x1234abcd5678ef9012345678abcdef9012345678</span>
+                <span id="depositAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
                 <button class="copy-btn" id="copyDepositBtn">Copy</button>
             </div>
-            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x1234abcd5678ef9012345678abcdef9012345678" alt="Deposit QR Code">
+            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="Deposit QR Code">
+            <a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" target="_blank" style="display:block;margin-bottom:10px;color:#9e6fff;text-decoration:underline;font-size:0.96rem;">View QR Code URL</a>
             <button class="action-btn" onclick="closeModal('depositModalBg')" style="margin-top:15px;">Close</button>
         </div>
     </div>
 
     <script>
-        // Sample ETH address for demo
-        const ethAddress = '0x1234abcd5678ef9012345678abcdef9012345678';
+        // ETH address for deposit/receive
+        const ethAddress = '0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9';
         // QR code API URL
         const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=' + ethAddress;
 
