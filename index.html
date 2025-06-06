@@ -240,12 +240,11 @@
         <div class="modal">
             <div class="modal-title">Receive ETH</div>
             <div class="modal-desc">Scan QR code or copy your address</div>
-            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="QR Code">
+            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="QR Code">
             <div class="address-holder" id="receiveAddressHolder">
                 <span id="ethAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
                 <button class="copy-btn" id="copyReceiveBtn">Copy</button>
             </div>
-            <a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" target="_blank" style="display:block;margin-bottom:10px;color:#9e6fff;text-decoration:underline;font-size:0.96rem;">View QR Code URL</a>
             <button class="action-btn" onclick="closeModal('qrModalBg')">Close</button>
         </div>
     </div>
@@ -288,14 +287,13 @@
                 <span id="depositAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
                 <button class="copy-btn" id="copyDepositBtn">Copy</button>
             </div>
-            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="Deposit QR Code">
-            <a href="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" target="_blank" style="display:block;margin-bottom:10px;color:#9e6fff;text-decoration:underline;font-size:0.96rem;">View QR Code URL</a>
+            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="Deposit QR Code">
             <button class="action-btn" onclick="closeModal('depositModalBg')" style="margin-top:15px;">Close</button>
         </div>
     </div>
 
     <script>
-        // ETH address for deposit/receive
+        // Sample ETH address for demo
         const ethAddress = '0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9';
         // QR code API URL
         const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=' + ethAddress;
