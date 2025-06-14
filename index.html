@@ -1,365 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Phantom Wallet - Portfolio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://phantom.app/favicon.ico">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body {
-            font-family: 'Inter', Arial, sans-serif;
-            background: radial-gradient(ellipse at top right, #8e5cff 10%, #181c29 80%);
-            min-height: 100vh;
-            margin: 0;
-            color: #e9e6f8;
-        }
-        .container {
-            max-width: 400px;
-            margin: 40px auto;
-            background: rgba(24,28,41,0.97);
-            border-radius: 20px;
-            padding: 30px 24px 24px 24px;
-            box-shadow: 0 6px 44px 0 rgba(72, 71, 255, 0.15), 0 1.5px 12px 0 rgba(0,0,0,0.11);
-        }
-        .logo {
-            width: 54px;
-            height: 54px;
-            border-radius: 12px;
-            background: #8e5cff linear-gradient(145deg,#9e6fff 20%, #8e5cff 80%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px auto;
-        }
-        .logo img {
-            width: 38px;
-            height: 38px;
-        }
-        .title {
-            text-align: center;
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 14px;
-            color: #e9e6f8;
-        }
-        .balance-section {
-            background: #252848;
-            border-radius: 15px;
-            padding: 22px 18px 18px 18px;
-            margin-bottom: 22px;
-            box-shadow: 0 2px 10px #8e5cff13;
-        }
-        .balance-label {
-            font-size: 1.04rem;
-            color: #ad9ee4;
-            margin-bottom: 6px;
-        }
-        .balance-value {
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: #f2eaff;
-            margin-bottom: 8px;
-        }
-        .balance-currency {
-            color: #baaadf;
-            font-size: 1.1rem;
-        }
-        .action-btns {
-            display: flex;
-            gap: 18px;
-            justify-content: center;
-            margin-top: 18px;
-        }
-        .action-btn {
-            background: linear-gradient(90deg,#9e6fff 10%, #8e5cff 90%);
-            color: #fff;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            font-size: 1.04rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.18s, box-shadow 0.18s;
-            box-shadow: 0 2px 10px 0 #8e5cff29;
-        }
-        .action-btn:hover {
-            background: linear-gradient(90deg,#a88fff 0%, #7a4fff 100%);
-        }
-        /* QR Modal */
-        .modal-bg, .withdraw-modal-bg, .error-modal-bg, .deposit-modal-bg {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0; top: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(35, 36, 58, 0.72);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal, .withdraw-modal, .error-modal, .deposit-modal {
-            background: #23253a;
-            border-radius: 16px;
-            box-shadow: 0 2px 24px rgba(142,92,255,0.16);
-            padding: 32px 28px 22px 28px;
-            max-width: 350px;
-            width: 88vw;
-            text-align: center;
-            border: 2px solid #8e5cff33;
-        }
-        .modal-title,
-        .withdraw-title,
-        .error-title,
-        .deposit-title {
-            font-size: 1.17rem;
-            font-weight: 700;
-            color: #9e6fff;
-            margin-bottom: 10px;
-        }
-        .modal-desc,
-        .withdraw-desc,
-        .error-desc,
-        .deposit-desc {
-            font-size: 1.06rem;
-            color: #e9e6f8;
-            margin-bottom: 14px;
-        }
-        .address-holder {
-            background: #202233;
-            border: 1px solid #30255c;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 0.96rem;
-            padding: 8px 12px;
-            margin-bottom: 10px;
-            overflow-x: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .copy-btn {
-            background: #312b4b;
-            border: none;
-            color: #9e6fff;
-            font-weight: 600;
-            border-radius: 8px;
-            padding: 5px 11px;
-            cursor: pointer;
-            font-size: 0.97rem;
-            margin-left: 10px;
-            transition: background 0.18s, color 0.18s;
-        }
-        .copy-btn:active {
-            background: #7c5cff1a;
-            color: #fff;
-        }
-        .modal img {
-            margin-bottom: 12px;
-            border-radius: 8px;
-            width: 120px;
-            height: 120px;
-            background: #fff;
-        }
-        .withdraw-form input {
-            width: 100%;
-            padding: 11px 10px;
-            margin-bottom: 14px;
-            border: 1.5px solid #2d2640;
-            border-radius: 8px;
-            background: #202233;
-            color: #e9e6f8;
-            font-size: 1rem;
-            outline: none;
-            box-sizing: border-box;
-            transition: border 0.2s;
-        }
-        .withdraw-form input:focus {
-            border: 1.5px solid #8e5cff;
-        }
-        .withdraw-btn {
-            background: linear-gradient(90deg,#9e6fff 10%, #8e5cff 90%);
-            color: #fff;
-            border: none;
-            padding: 11px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 2px;
-        }
-        .withdraw-btn:hover {
-            background: linear-gradient(90deg,#a88fff 0%, #7a4fff 100%);
-        }
-        .error-modal .error-desc {
-            color: #ff7272;
-            margin-bottom: 14px;
-        }
-        .topup-btn {
-            background: #8e5cff;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.18s;
-        }
-        .topup-btn:hover {
-            background: #a88fff;
-        }
-        @media (max-width: 500px) {
-            .container {
-                padding: 14px 2px;
-            }
-            .modal, .withdraw-modal, .error-modal, .deposit-modal {
-                padding: 18px 2px 12px 2px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Professional Bank Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap">
+  <script src="https://kit.fontawesome.com/9b5e7e9d89.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: #f6f9fb;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #26354d;
+    }
+
+    .dashboard-container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding-bottom: 90px;
+    }
+
+    .account-card {
+      background: linear-gradient(135deg, #4187c3 0%, #306e9e 100%);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(49, 89, 135, 0.12);
+      color: #fff;
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+      margin: 2rem 1rem 1.5rem 1rem;
+      position: relative;
+    }
+
+    .account-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .account-type {
+      font-weight: 600;
+      letter-spacing: 1px;
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
+
+    .more-options {
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .account-balance {
+      margin-bottom: 0.8rem;
+    }
+
+    .balance-label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .balance-amount {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .account-details {
+      margin-bottom: 1rem;
+    }
+
+    .account-number-label {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      display: block;
+    }
+    .account-number {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .account-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 0.8rem;
+    }
+    .account-summary div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .summary-label {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+    .summary-date {
+      font-size: 0.82rem;
+      opacity: 0.6;
+    }
+    .summary-amount {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 0.1rem;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1.2rem 1rem;
+      background: #fff;
+      border-radius: 16px;
+      margin: 0 1rem;
+      padding: 2rem 1rem 1rem 1rem;
+      box-shadow: 0 2px 16px rgba(49, 89, 135, 0.07);
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(120deg, #e7f1fa 0%, #e0e9f2 100%);
+      border-radius: 12px;
+      padding: 1.1rem 0.5rem 0.7rem 0.5rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s, background 0.2s, color 0.2s;
+      box-shadow: 0 2px 10px rgba(49, 89, 135, 0.04);
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+    .action-btn:focus, .action-btn:hover {
+      background: linear-gradient(120deg, #3984c1 0%, #2566a2 100%);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(49, 89, 135, 0.15);
+    }
+
+    .action-btn i {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .action-btn span {
+      font-size: 0.98rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      background: #fff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -2px 16px rgba(49, 89, 135, 0.06);
+      z-index: 10;
+      padding: 0.15rem 0;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #6c849f;
+      text-decoration: none;
+      font-size: 0.95rem;
+      padding: 0.6rem 0.3rem 0.3rem 0.3rem;
+      flex: 1;
+      transition: color 0.2s;
+    }
+    .nav-item i {
+      font-size: 1.25rem;
+      margin-bottom: 0.18rem;
+    }
+    .nav-item.active, .nav-item:focus, .nav-item:hover {
+      color: #2763a5;
+      font-weight: 700;
+    }
+
+    @media (max-width: 500px) {
+      .dashboard-container {
+        max-width: 100vw;
+        padding-bottom: 90px;
+      }
+      .account-card, .actions-grid {
+        margin: 1rem 0.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <img src="IMG_0353.png" alt="Phantom Logo">
+  <div class="dashboard-container">
+    <section class="account-card">
+      <div class="account-header">
+        <span class="account-type">Checkings</span>
+        <i class="fas fa-ellipsis-v more-options"></i>
+      </div>
+      <div class="account-balance">
+        <span class="balance-label">Account Balance</span>
+        <span class="balance-amount">$185,600.00</span>
+      </div>
+      <div class="account-details">
+        <span class="account-number-label">Account Number</span>
+        <span class="account-number">•••• 7143</span>
+      </div>
+      <div class="account-summary">
+        <div>
+          <span class="summary-label">Total Credit</span>
+          <span class="summary-date">Apr. 2025</span>
+          <span class="summary-amount">$0.00</span>
         </div>
-        <div class="title">Portfolio</div>
-        <div class="balance-section">
-            <div class="balance-label">ETH Balance</div>
-            <div class="balance-value">$100,000</div>
-            <div class="balance-currency">ETH</div>
+        <div>
+          <span class="summary-label">Total Debit</span>
+          <span class="summary-date">Apr. 2025</span>
+          <span class="summary-amount">$0.00</span>
         </div>
-        <div class="action-btns">
-            <button class="action-btn" id="sendBtn">Send</button>
-            <button class="action-btn" id="receiveBtn">Receive</button>
-        </div>
-    </div>
-
-    <!-- QR Modal & Receive -->
-    <div class="modal-bg" id="qrModalBg">
-        <div class="modal">
-            <div class="modal-title">Receive ETH</div>
-            <div class="modal-desc">Scan QR code or copy your address</div>
-            <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="QR Code">
-            <div class="address-holder" id="receiveAddressHolder">
-                <span id="ethAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
-                <button class="copy-btn" id="copyReceiveBtn">Copy</button>
-            </div>
-            <button class="action-btn" onclick="closeModal('qrModalBg')">Close</button>
-        </div>
-    </div>
-
-    <!-- Withdraw Modal -->
-    <div class="withdraw-modal-bg" id="withdrawModalBg">
-        <div class="withdraw-modal">
-            <div class="withdraw-title">Withdraw ETH</div>
-            <form class="withdraw-form" id="withdrawForm">
-                <label style="color:#beacee;font-weight:500;">Withdraw Amount</label>
-                <input type="text" id="withdrawAmount" value="$100,000" readonly>
-                <label style="color:#beacee;font-weight:500;">To Address</label>
-                <input type="text" id="withdrawAddress" placeholder="Enter ETH address" required>
-                <button class="withdraw-btn" type="submit">Confirm Withdraw</button>
-            </form>
-            <button class="action-btn" onclick="closeModal('withdrawModalBg')" style="margin-top:8px;">Cancel</button>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div class="error-modal-bg" id="errorModalBg">
-        <div class="error-modal">
-            <div class="error-title">NOT ENOUGH ETH</div>
-            <div class="error-desc">
-                You don't have enough ETH in your records for this transaction.<br>
-                <span style="font-size:1.02rem;color:#b0a0ef;">Required ETH: 0.08804745</span>
-            </div>
-            <button class="topup-btn" id="topupBtn">Top up</button>
-        </div>
-    </div>
-
-    <!-- Deposit Modal -->
-    <div class="deposit-modal-bg" id="depositModalBg">
-        <div class="deposit-modal">
-            <div class="deposit-title">Deposit ETH</div>
-            <div class="deposit-desc">
-                <span style="color:#b0a0ef;">Deposit Address:</span>
-            </div>
-            <div class="address-holder" id="depositAddressHolder">
-                <span id="depositAddress">0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9</span>
-                <button class="copy-btn" id="copyDepositBtn">Copy</button>
-            </div>
-            <img id="depositQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9" alt="Deposit QR Code">
-            <button class="action-btn" onclick="closeModal('depositModalBg')" style="margin-top:15px;">Close</button>
-        </div>
-    </div>
-
-    <script>
-        // Sample ETH address for demo
-        const ethAddress = '0x38536D4165d4A3C67bECB8fd5C5528d391290Ab9';
-        // QR code API URL
-        const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=' + ethAddress;
-
-        // Set ETH address and QR for receive and deposit
-        document.getElementById('ethAddress').textContent = ethAddress;
-        document.getElementById('receiveAddressHolder').querySelector('span').textContent = ethAddress;
-        document.getElementById('qrImg').src = qrApiUrl;
-        document.getElementById('depositAddress').textContent = ethAddress;
-        document.getElementById('depositAddressHolder').querySelector('span').textContent = ethAddress;
-        document.getElementById('depositQrImg').src = qrApiUrl;
-
-        // Send Button
-        document.getElementById('sendBtn').onclick = function() {
-            document.getElementById('withdrawModalBg').style.display = 'flex';
-        };
-        // Receive Button
-        document.getElementById('receiveBtn').onclick = function() {
-            document.getElementById('qrModalBg').style.display = 'flex';
-        };
-
-        // Copy address for receive
-        document.getElementById('copyReceiveBtn').onclick = function() {
-            copyAddress(ethAddress, this);
-        };
-        // Copy address for deposit
-        document.getElementById('copyDepositBtn').onclick = function() {
-            copyAddress(ethAddress, this);
-        };
-
-        function copyAddress(addr, btn) {
-            navigator.clipboard.writeText(addr).then(() => {
-                btn.textContent = 'Copied!';
-                setTimeout(() => btn.textContent = 'Copy', 1200);
-            });
-        }
-
-        // Withdraw Form Logic
-        document.getElementById('withdrawForm').onsubmit = function(e) {
-            e.preventDefault();
-            // Simulate NOT ENOUGH ETH error
-            closeModal('withdrawModalBg');
-            setTimeout(function() {
-                document.getElementById('errorModalBg').style.display = 'flex';
-            }, 300);
-        };
-
-        // Topup Button
-        document.getElementById('topupBtn').onclick = function() {
-            closeModal('errorModalBg');
-            setTimeout(function() {
-                document.getElementById('depositModalBg').style.display = 'flex';
-            }, 250);
-        };
-
-        // Modal close utility
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        // Close modals on background click
-        ['qrModalBg', 'withdrawModalBg', 'errorModalBg', 'depositModalBg'].forEach(function(bgId) {
-            document.getElementById(bgId).onclick = function(e) {
-                if (e.target === this) closeModal(bgId);
-            }
-        });
-    </script>
+      </div>
+    </section>
+    <section class="actions-grid">
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Wire Transfer</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-exchange-alt"></i>
+        <span>Local Transfer</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-sync-alt"></i>
+        <span>Internal Transfer</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fab fa-btc"></i>
+        <span>Buy Crypto</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-file-invoice-dollar"></i>
+        <span>Pay Bills</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-user-plus"></i>
+        <span>Add Beneficiary</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-credit-card"></i>
+        <span>Card Deposit</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fab fa-btc"></i>
+        <span>Crypto Deposit</span>
+      </div>
+      <div class="action-btn" tabindex="0">
+        <i class="fas fa-money-check-alt"></i>
+        <span>Check Deposit</span>
+      </div>
+    </section>
+  </div>
+  <nav class="bottom-nav">
+    <a href="#" class="nav-item active">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-bell"></i>
+      <span>Notifications</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-headset"></i>
+      <span>Support</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </a>
+  </nav>
 </body>
 </html>
